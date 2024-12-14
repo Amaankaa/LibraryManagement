@@ -55,12 +55,13 @@
 
                 <div class="login__box">
                     <i class='bx bx-at login__icon'></i>
-                    <input name="email" type="text" placeholder="Email" class="login__input">
+                    <input name="email" type="email" placeholder="Email" class="login__input">
                 </div>
 
                 <div class="login__box">
                     <i class='bx bx-lock-alt login__icon'></i>
-                    <input type="password" name="password" placeholder="Password" class="login__input">
+                    <input id="PWD" type="password" name="password" placeholder="Password" class="login__input">
+                    <div id="message"></div>
                 </div>
 
                 <div class="login__box">
