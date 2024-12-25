@@ -94,15 +94,14 @@
         <h1>ADMIN</h1>
     </div>
     <ul>
-        <li><a style="color: white" href="dashboard?name=admin"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
-        <li><a style="color: white" href="dashboard?name=student"><img src="${pageContext.request.contextPath}/assets/png/reading-book (1).png">&nbsp; Students</a></li>
-        <li><a style="color: white" href="dashboard?name=staff"><img src="${pageContext.request.contextPath}/assets/png/teacher2.png">&nbsp; Staffs</a></li>
-        <li><a style="color: white" href="dashboard?name=books"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
-        <li><a style="color: white" href="dashboard?name=settings"><img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/admin-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/students.jsp"><img src="${pageContext.request.contextPath}/assets/png/reading-book (1).png">&nbsp; Students</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/staffs.jsp"><img src="${pageContext.request.contextPath}/assets/png/teacher2.png">&nbsp; Staffs</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/books.jsp"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/settings.jsp"><img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
     </ul>
 
 </div>
-
 <div class="container">
     <div class="header">
         <div class="nav">
