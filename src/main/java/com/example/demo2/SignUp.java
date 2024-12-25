@@ -2,6 +2,8 @@ package com.example.demo2;
 
 import java.io.PrintWriter;
 import java.sql.*;
+
+import com.example.demo2.dao.DBConnection;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,15 +25,12 @@ public class SignUp extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
 
-        // Database connection details
-        String url = "jdbc:mysql://localhost:3306/mydb";
-        String dbUser = "root";
-        String dbPassword = "root123";
 
         // SQL query to insert a new user
-        String sql = "INSERT INTO stakeholders VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO stakeholders (username, email, password, role) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = DriverManager.getConnection(url, dbUser, dbPassword);
+
+        try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             // Get form data
@@ -102,7 +101,7 @@ public class SignUp extends HttpServlet {
             response.getWriter().println("Error: " + e.getMessage());
             response.getWriter().println(
                     "<script type=\"text/javascript\">"
-                            + "alert('\"e.getMessage()\"');"
+                            + "alert('"+ e.getMessage()+"');"
                             + "window.location = 'index.jsp';"
                             + "</script>"
             );

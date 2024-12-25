@@ -1,10 +1,7 @@
-<%@ page language="java" import="java.sql.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="assets/css/admin-dashboard.css" rel="stylesheet">
     <title>Dashboard</title>
-    <link href="assets/css/students.css" rel="stylesheet">
     <style>
         .content {
             width: 100%; /* Ensure the container spans the full width */
@@ -72,7 +69,6 @@
                 document.getElementById(selectedAction + "Form").classList.add('active');
             }
         }
-
         function showMessage(message) {
             alert(message);
         }
@@ -84,9 +80,6 @@
         <h1>STUDENT</h1>
     </div>
     <ul>
-        <li><a style="color: white" href="student-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
-        <li><a style="color: white" href="books.jsp"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
-        <li><a style="color: white" href="settings.jsp"><img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
     </ul>
 </div>
 <div class="container">
@@ -108,7 +101,6 @@
         <div class="book-grid">
             <%
                 try {
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT title, author, price, rating, image_url FROM books");
 
@@ -129,7 +121,6 @@
                         for (int i = 0; i < 5; i++) {
                             if (i < rating) {
                     %>
-                    ⭐
                     <%
                     } else {
                     %>

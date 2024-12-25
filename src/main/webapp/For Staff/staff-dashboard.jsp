@@ -70,10 +70,6 @@
         <h1>STAFF</h1>
     </div>
     <ul>
-        <li><a style="color: white" href="staff-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
-        <li><a style="color: white" href="students.jsp"><img src="${pageContext.request.contextPath}/assets/png/reading-book (1).png">&nbsp; Students</a></li>
-        <li><a style="color: white" href="books.jsp"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
-        <li><a style="color: white" href="settings.jsp"><img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
     </ul>
 </div>
 <div class="container">
@@ -100,7 +96,6 @@
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT title, author, price, rating, image_url FROM books");
-
                     while (rs.next()) {
                         String title = rs.getString("title");
                         String author = rs.getString("author");
@@ -109,7 +104,6 @@
                         String imageUrl = rs.getString("image_url");
             %>
             <div class="book-card">
-                <img src="<%= imageUrl != null ? imageUrl : "assets/img/Not found.jpg" %>" alt="<%= title %>">
                 <h3><%= title %></h3>
                 <p>by <%= author %></p>
                 <p class="price">$<%= String.format("%.2f", price) %></p>
@@ -118,7 +112,6 @@
                         for (int i = 0; i < 5; i++) {
                             if (i < rating) {
                     %>
-                    ⭐
                     <%
                     } else {
                     %>

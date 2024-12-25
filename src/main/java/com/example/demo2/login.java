@@ -1,6 +1,8 @@
 package com.example.demo2;
 
 import java.sql.*;
+
+import com.example.demo2.dao.DBConnection;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,12 +17,9 @@ import java.util.regex.Pattern;
 public class login extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
-        String url = "jdbc:mysql://localhost:3306/mydb";
-        String user = "root";
-        String password = "root123";
         String query = "SELECT password, role FROM stakeholders WHERE username = ?";
         try {
-            Connection con = DriverManager.getConnection(url, user, password);
+            Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(query);
 
             ps.setString(1, request.getParameter("username"));
@@ -35,16 +34,14 @@ public class login extends HttpServlet {
                 // Compare input password with the stored hash
                 if (BCrypt.checkpw(request.getParameter("password"), storedHash)) {
                     if ("admin".equalsIgnoreCase(role)) {
-                        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin-dashboard.html");
-                        rd.forward(request,response);
+                        response.sendRedirect("For Admin/admin-dashboard.jsp");
                     } else if ("staff".equalsIgnoreCase(role)) {
-                        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/staff-dashboard.html");
-                        rd.forward(request,response);
+                        response.sendRedirect("For Staff/staff-dashboard.jsp");
                     } else {
-                        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/student-dashboard.html");
-                        rd.forward(request,response);
+                        response.sendRedirect("For Student/student-dashboard.jsp");
                     }
-                } else {
+                }
+                else {
                     response.getWriter().println(
                             "<script type=\"text/javascript\">"
                                     + "alert('Your password is incorrect!');"
