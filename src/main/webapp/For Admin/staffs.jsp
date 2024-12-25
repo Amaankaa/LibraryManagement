@@ -4,9 +4,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link href="${pageContext.request.contextPath}/assets/css/admin-dashboard.css" rel="stylesheet">
-    <title>Manage Students</title>
-    <link href="${pageContext.request.contextPath}/assets/css/students.css" rel="stylesheet">
+    <link href="../assets/css/admin-dashboard.css" rel="stylesheet">
+    <title>Manage Staffs</title>
+    <link href="../assets/css/students.css" rel="stylesheet">
     <script>
         function showForm() {
             const selectedAction = document.getElementById("actionSelector").value;
@@ -46,45 +46,45 @@
     </div>
 
     <div style="margin-top: 50px">
-        <h1>Manage Students</h1>
+        <h1>Manage Staffs</h1>
         <select id="actionSelector" onchange="showForm()">
-            <option value="add">Add Students</option>
-            <option value="remove">Remove Students</option>
-            <option value="fetch" selected>Fetch Students</option>
+            <option value="add">Add Staffs</option>
+            <option value="remove">Remove Staffs</option>
+            <option value="fetch" selected>Fetch Staffs</option>
         </select>
     </div>
-    <!-- Add Students Form -->
+    <!-- Add Staffs Form -->
     <div id="addForm" class="form-container">
         <form method="post">
-            <h3>Add Student</h3>
+            <h3>Add Staff</h3>
             <input type="text" name="username" placeholder="Username" required>
             <input type="text" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
             <input type="text" name="role" placeholder="Role" required>
-            <button type="submit" name="action" value="add">Add Student</button>
+            <button type="submit" name="action" value="add">Add Staff</button>
         </form>
     </div>
 
-    <!-- Remove Students Form -->
+    <!-- Remove Staffs Form -->
     <div id="removeForm" class="form-container">
         <form method="post">
-            <h3>Remove Student</h3>
-            <input type="text" name="username" placeholder="Student username to Remove" required>
-            <button type="submit" name="action" value="remove">Remove Student</button>
+            <h3>Remove Staff</h3>
+            <input type="text" name="username" placeholder="Staff username to Remove" required>
+            <button type="submit" name="action" value="remove">Remove Staff</button>
         </form>
     </div>
-    <!-- Fetch Students Form -->
+    <!-- Fetch Staffs Form -->
     <div id="fetchForm" class="form-container active">
         <form method="post">
-            <h3>Fetch Students</h3>
-            <button type="submit" name="action" value="fetch">Fetch All Students</button>
+            <h3>Fetch Staffs</h3>
+            <button type="submit" name="action" value="fetch">Fetch All Staffs</button>
         </form>
         <%
             if ("fetch".equals(request.getParameter("action"))) {
                 try {
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
                     Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM stakeholders where role = 'student'");
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM stakeholders where role = 'staff'");
         %>
         <table border="1">
             <tr>
@@ -124,7 +124,7 @@
                         response.getWriter().println(
                                 "<script type=\"text/javascript\">"
                                         + "alert('Invalid email format! Please try again.');"
-                                        + "window.location = 'students.jsp';"
+                                        + "window.location = 'staffs.jsp';"
                                         + "</script>"
                         );
                         return;
@@ -136,7 +136,7 @@
                         response.getWriter().println(
                                 "<script type=\"text/javascript\">"
                                         + "alert('Your password is too weak. It must:\\n- Be at least 8 characters long.\\n- Include at least one uppercase letter.\\n- Include at least one lowercase letter.\\n- Include at least one number.\\n- Include at least one special character (e.g., @, $, %, &).');"
-                                        + "window.location = 'students.jsp';"
+                                        + "window.location = 'staffs.jsp';"
                                         + "</script>"
                         );
                         return;
