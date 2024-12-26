@@ -1,5 +1,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="com.example.demo2.dao.DBConnection" %>
 <%
     int studentCount = 0;
     int staffCount = 0;
@@ -7,13 +8,9 @@
     List<String[]> recentBooks = new ArrayList<>();
     List<String> studentName = new ArrayList<>();
     int totalCopies = 0;
-    String dbURL = "jdbc:mysql://localhost:3306/mydb";
-    String dbUser = "root";
-    String dbPass = "root123";
 
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conn = DriverManager.getConnection(dbURL, dbUser, dbPass);
+        Connection conn = DBConnection.getConnection();
 
         PreparedStatement ps;
 
@@ -94,7 +91,7 @@
         <h1>ADMIN</h1>
     </div>
     <ul>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/admin-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/admin-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard (2).png">&nbsp; Dashboard</a></li>
         <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/students.jsp"><img src="${pageContext.request.contextPath}/assets/png/reading-book (1).png">&nbsp; Students</a></li>
         <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/staffs.jsp"><img src="${pageContext.request.contextPath}/assets/png/teacher2.png">&nbsp; Staffs</a></li>
         <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Admin/books.jsp"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>

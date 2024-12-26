@@ -1,12 +1,13 @@
 <%@ page import="java.sql.*" %>
 <%@ page import ="org.mindrot.jbcrypt.BCrypt"%>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ page import="com.example.demo2.dao.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link href="../assets/css/admin-dashboard.css" rel="stylesheet">
     <title>Staff Dashboard</title>
-    <link href="../assets/css/students.css" rel="stylesheet">
+    <link href="../assets/css/student.css" rel="stylesheet">
     <script>
         function showForm() {
             const selectedAction = document.getElementById("actionSelector").value;
@@ -65,6 +66,7 @@
             <button type="submit" name="action" value="add">Add Staff</button>
         </form>
     </div>
+
     <!-- Update Staffs Form -->
     <div id="updateForm" class="form-container">
         <form method="post">
@@ -101,7 +103,7 @@
         <%
             if ("fetch".equals(request.getParameter("action"))) {
                 try {
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
+                    Connection con = DBConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT * FROM stakeholders where role = 'staff'");
         %>
@@ -126,11 +128,11 @@
         %>
     </div>
 
-<%
+    <%
         String action = request.getParameter("action");
         if (action != null) {
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
+                Connection con = DBConnection.getConnection();
                 if ("add".equals(action)) {
                     String username = request.getParameter("username");
                     String email = request.getParameter("email");
@@ -150,6 +152,7 @@
                     }
 
                     String pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
                     if (!password.matches(pattern)) {
                         response.getWriter().println(
                                 "<script type=\"text/javascript\">"
@@ -205,6 +208,7 @@
                     }
 
                     String pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+
                     if (!newPassword.matches(pattern)) {
                         response.getWriter().println(
                                 "<script type=\"text/javascript\">"
@@ -271,7 +275,7 @@
 
             }
         }
-%>
+    %>
 </div>
 </body>
 </html>

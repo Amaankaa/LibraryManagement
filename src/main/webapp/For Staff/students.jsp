@@ -1,6 +1,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="org.mindrot.jbcrypt.BCrypt" %>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ page import="com.example.demo2.dao.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -73,6 +74,7 @@
             <button type="submit" name="action" value="remove">Remove Student</button>
         </form>
     </div>
+
     <!-- Fetch Student by Username Form -->
     <div id="fetchForm" class="form-container active">
         <form method="post">
@@ -83,7 +85,7 @@
         <%
             if ("fetch".equals(request.getParameter("action"))) {
                 String studentUsername = request.getParameter("studentUsername");
-                try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123")) {
+                try (Connection con = DBConnection.getConnection()) {
                     PreparedStatement pstmt = con.prepareStatement("SELECT * FROM stakeholders WHERE username = ? AND role = 'student'");
                     pstmt.setString(1, studentUsername);
                     ResultSet rs = pstmt.executeQuery();
@@ -117,7 +119,7 @@
     <%
         String action = request.getParameter("action");
         if (action != null) {
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123")) {
+            try (Connection con = DBConnection.getConnection()) {
                 if ("add".equals(action)) {
                     String username = request.getParameter("username");
                     String email = request.getParameter("email");

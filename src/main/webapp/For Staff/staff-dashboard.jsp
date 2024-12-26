@@ -1,14 +1,16 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="com.example.demo2.dao.DBConnection" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <link href="../assets/css/admin-dashboard.css" rel="stylesheet">
     <title>Staff Dashboard</title>
-    <link href="../assets/css/students.css" rel="stylesheet">
+    <link href="../assets/css/student.css" rel="stylesheet">
     <style>
         .content {
             width: 100%; /* Ensure the container spans the full width */
             margin: 0 auto; /* Center the container */
+            height: 100%;
             box-sizing: border-box;
         }
 
@@ -70,6 +72,11 @@
         <h1>STAFF</h1>
     </div>
     <ul>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/staff-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/students.jsp"><img src="${pageContext.request.contextPath}/assets/png/reading-book (1).png">&nbsp; Students</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/books.jsp"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/settings.jsp"><img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/assets/png/logout.png">&nbsp; Logout</a></li>
     </ul>
 </div>
 <div class="container">
@@ -93,9 +100,10 @@
         <div class="book-grid">
             <%
                 try {
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
+                    Connection con = DBConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT title, author, price, rating, image_url FROM books");
+
                     while (rs.next()) {
                         String title = rs.getString("title");
                         String author = rs.getString("author");
@@ -104,6 +112,7 @@
                         String imageUrl = rs.getString("image_url");
             %>
             <div class="book-card">
+                <img src="<%= imageUrl != null ? imageUrl : "../assets/img/Not found.jpg" %>" alt="<%= title %>">
                 <h3><%= title %></h3>
                 <p>by <%= author %></p>
                 <p class="price">$<%= String.format("%.2f", price) %></p>
@@ -112,6 +121,7 @@
                         for (int i = 0; i < 5; i++) {
                             if (i < rating) {
                     %>
+                    ⭐
                     <%
                     } else {
                     %>

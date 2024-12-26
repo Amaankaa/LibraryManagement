@@ -1,12 +1,13 @@
-settings: <%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@ page import ="org.mindrot.jbcrypt.BCrypt"%>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ page import="com.example.demo2.dao.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link href="../assets/css/admin-dashboard.css" rel="stylesheet">
     <title>Student Dashboard</title>
-    <link href="../assets/css/students.css" rel="stylesheet">
+    <link href="../assets/css/student.css" rel="stylesheet">
     <script>
         function showForm() {
             const selectedAction = document.getElementById("actionSelector").value;
@@ -69,6 +70,7 @@ settings: <%@ page import="java.sql.*" %>
             <button type="submit" name="action" value="update">Update Student</button>
         </form>
     </div>
+
     <!-- Fetch Students Form -->
     <div id="fetchForm" class="form-container active">
         <form method="post">
@@ -78,7 +80,7 @@ settings: <%@ page import="java.sql.*" %>
         <%
             if ("fetch".equals(request.getParameter("action"))) {
                 try {
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
+                    Connection con = DBConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT * FROM stakeholders where role = 'student'");
         %>
@@ -103,11 +105,11 @@ settings: <%@ page import="java.sql.*" %>
         %>
     </div>
 
-<%
+    <%
         String action = request.getParameter("action");
         if (action != null) {
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
+                Connection con = DBConnection.getConnection();
                 if ("update".equals(action)) {
                     String username = request.getParameter("username");
                     String updatedUsername = request.getParameter("updatedUsername");
@@ -151,6 +153,7 @@ settings: <%@ page import="java.sql.*" %>
                         );
                         return;
                     }
+
                     // Get current admin password from the DB
                     PreparedStatement stmt = con.prepareStatement("SELECT password FROM stakeholders WHERE username = ?");
                     stmt.setString(1, username);
@@ -207,7 +210,7 @@ settings: <%@ page import="java.sql.*" %>
 
             }
         }
-%>
+    %>
 </div>
 </body>
 </html>

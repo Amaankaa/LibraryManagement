@@ -1,11 +1,11 @@
 <%@ page import="java.sql.*" %>
-<%@ page import="dao.DBConnection" %>
+<%@ page import="com.example.demo2.dao.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
   <link href="../assets/css/admin-dashboard.css" rel="stylesheet">
   <title>Manage Books</title>
-  <link href="../assets/css/students.css" rel="stylesheet">
+  <link href="../assets/css/student.css" rel="stylesheet">
   <script>
     function showForm() {
       const selectedAction = document.getElementById("actionSelector").value;

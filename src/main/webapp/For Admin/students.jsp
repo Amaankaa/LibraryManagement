@@ -1,12 +1,13 @@
 <%@ page import="java.sql.*" %>
 <%@ page import ="org.mindrot.jbcrypt.BCrypt"%>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ page import="com.example.demo2.dao.DBConnection" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <link href="${pageContext.request.contextPath}/assets/css/admin-dashboard.css" rel="stylesheet">
     <title>Manage Students</title>
-    <link href="${pageContext.request.contextPath}/assets/css/students.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/student.css" rel="stylesheet">
     <script>
         function showForm() {
             const selectedAction = document.getElementById("actionSelector").value;
@@ -111,7 +112,7 @@
         String action = request.getParameter("action");
         if (action != null) {
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "root123");
+                Connection con = DBConnection.getConnection();
                 if ("add".equals(action)) {
                     String username = request.getParameter("username");
                     String email = request.getParameter("email");
