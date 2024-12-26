@@ -42,6 +42,8 @@ Columns:
 - added_date (DATE): The date the user was added to the system.
 
 All the necessary codes to setup the database is as follows. Copy and paste the following code in your MySQL workbench:
+
+
 /*
 create database mydb;
 use mydb;
