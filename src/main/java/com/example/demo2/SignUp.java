@@ -1,6 +1,5 @@
 package com.example.demo2;
 
-import java.io.PrintWriter;
 import java.sql.*;
 
 import com.example.demo2.dao.DBConnection;

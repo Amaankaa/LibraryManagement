@@ -1,0 +1,123 @@
+<%@ page import="com.example.demo2.staffsDAO.Staff" %>
+<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <link href="${pageContext.request.contextPath}/assets/css/admin-dashboard.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/student.css" rel="stylesheet">
+    <title>Manage Staffs</title>
+    <script>
+        function showForm() {
+            const selectedAction = document.getElementById("actionSelector").value;
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => form.classList.remove('active'));
+            document.getElementById(selectedAction + "Form").classList.add('active');
+        }
+        function showMessage(message) {
+            alert(message);
+        }
+    </script>
+</head>
+<body>
+<div class="side-menu">
+    <div class="brand-name">
+        <h1>ADMIN</h1>
+    </div>
+    <ul>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/admin-navigator?page=dashboard">
+            <img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/admin-navigator?page=students">
+            <img src="${pageContext.request.contextPath}/assets/png/reading-book%20(1).png">&nbsp; Students</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/admin-navigator?page=staffs">
+            <img src="${pageContext.request.contextPath}/assets/png/teacher2.png">&nbsp; Staffs</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/admin-navigator?page=books">
+            <img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/admin-navigator?page=settings">
+            <img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/admin-navigator?page=logout">
+            <img src="${pageContext.request.contextPath}/assets/png/logout.png">&nbsp; Logout</a></li>
+    </ul>
+</div>
+<div class="container">
+    <div class="header">
+        <div class="nav">
+            <div class="search">
+                <h1>Admin-Dashboard</h1>
+            </div>
+            <div class="user">
+                <img src="${pageContext.request.contextPath}/assets/png/notifications.png" alt="">
+                <div class="img-case">
+                    <img src="${pageContext.request.contextPath}/assets/png/user.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 50px">
+        <h1>Manage Staffs</h1>
+        <select id="actionSelector" onchange="showForm()">
+            <option value="add">Add Staffs</option>
+            <option value="remove">Remove Staffs</option>
+            <option value="fetch" selected>Fetch Staffs</option>
+        </select>
+    </div>
+    <!-- Add Staffs Form -->
+    <div id="addForm" class="form-container">
+        <form method="post" action="StaffServlet">
+            <h3>Add Staff</h3>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="text" name="role" placeholder="Role" required>
+            <button type="submit" name="action" value="add">Add Staff</button>
+        </form>
+    </div>
+
+    <!-- Remove Staffs Form -->
+    <div id="removeForm" class="form-container">
+        <form method="post" action="StaffServlet">
+            <h3>Remove Staff</h3>
+            <input type="text" name="username" placeholder="Staff username to Remove" required>
+            <button type="submit" name="action" value="remove">Remove Staff</button>
+        </form>
+    </div>
+
+    <!-- Fetch Staffs Form -->
+    <div id="fetchForm" class="form-container active">
+        <form method="post" action="StaffServlet">
+            <h3>Fetch Staffs</h3>
+            <input type="hidden" name="target" value="/WEB-INF/For Admin/staffs.jsp">
+            <button type="submit" name="action" value="fetch">Fetch All Staffs</button>
+        </form>
+
+        <%-- Check if the "staffs" attribute exists and is not empty --%>
+        <%
+            List<Staff> staffs = (List<Staff>) request.getAttribute("staffs");
+            if (staffs != null && !staffs.isEmpty()) {
+        %>
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+            <% for (Staff staff : staffs) { %>
+            <tr>
+                <td><%= staff.getUsername() %></td>
+                <td><%= staff.getEmail() %></td>
+            </tr>
+            <% } %>
+        </table>
+        <%
+        } else {
+            }
+        %>
+    </div>
+
+    <% if (request.getAttribute("message") != null) { %>
+        <script>
+            showMessage("<%= request.getAttribute("message") %>");
+        </script>
+    <% } %>
+</div>
+</body>
+</html>

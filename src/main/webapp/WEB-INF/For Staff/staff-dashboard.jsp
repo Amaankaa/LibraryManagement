@@ -1,15 +1,16 @@
-<%@ page language="java" import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@ page import="com.example.demo2.dao.DBConnection" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <link href="../assets/css/admin-dashboard.css" rel="stylesheet">
-    <title>Dashboard</title>
-    <link href="../assets/css/student.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/admin-dashboard.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/student.css" rel="stylesheet">
+    <title>Staff Dashboard</title>
     <style>
         .content {
             width: 100%; /* Ensure the container spans the full width */
             margin: 0 auto; /* Center the container */
+            height: 100%;
             box-sizing: border-box;
         }
 
@@ -64,38 +65,30 @@
             font-size: 1.2em;
         }
     </style>
-    <script>
-        function showForm() {
-            const selectedAction = document.getElementById("actionSelector").value;
-            const forms = document.querySelectorAll('.form-container');
-            forms.forEach(form => form.classList.remove('active'));
-            if (selectedAction) {
-                document.getElementById(selectedAction + "Form").classList.add('active');
-            }
-        }
-
-        function showMessage(message) {
-            alert(message);
-        }
-    </script>
 </head>
 <body>
 <div class="side-menu">
     <div class="brand-name">
-        <h1>STUDENT</h1>
+        <h1>STAFF</h1>
     </div>
     <ul>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Student/student-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Student/books.jsp"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Student/settings.jsp"><img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/assets/png/logout.png">&nbsp; Logout</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/staff-navigator?page=dashboard">
+            <img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/staff-navigator?page=books">
+            <img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/staff-navigator?page=students">
+            <img src="${pageContext.request.contextPath}/assets/png/reading-book%20(1).png">&nbsp; Students</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/staff-navigator?page=settings">
+            <img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/staff-navigator?page=logout">
+            <img src="${pageContext.request.contextPath}/assets/png/logout.png">&nbsp; Logout</a></li>
     </ul>
 </div>
 <div class="container">
     <div class="header">
         <div class="nav">
             <div class="search">
-                <h1>Student-Dashboard</h1>
+                <h1>Staff-Dashboard</h1>
             </div>
             <div class="user">
                 <img src="${pageContext.request.contextPath}/assets/png/notifications.png" alt="">
@@ -105,12 +98,13 @@
             </div>
         </div>
     </div>
+
+    <!-- Book Grid -->
     <div class="content">
         <h2 style="text-align: center; margin-top: 20px;">Available Books</h2>
         <div class="book-grid">
             <%
-                try {
-                    Connection con = DBConnection.getConnection();
+                try {Connection con = DBConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT title, author, price, rating, image_url FROM books");
 
@@ -122,7 +116,7 @@
                         String imageUrl = rs.getString("image_url");
             %>
             <div class="book-card">
-                <img src="<%= imageUrl != null ? imageUrl : "assets/img/Not found.jpg" %>" alt="<%= title %>">
+                <img src="<%= imageUrl != null ? request.getContextPath() + imageUrl : request.getContextPath() + "/assets/img/NotFound.jpg" %>" alt="<%= title %>">
                 <h3><%= title %></h3>
                 <p>by <%= author %></p>
                 <p class="price">$<%= String.format("%.2f", price) %></p>
@@ -149,7 +143,6 @@
             %>
             <script>
                 alert("Error occurred while fetching books: <%= e.getMessage() %>");
-                window.location = 'staff-dashboard.jsp';
             </script>
             <%
                 }

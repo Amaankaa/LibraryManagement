@@ -42,7 +42,7 @@
                     <span class="login__account">Don't have an Account ?</span>
                     <span class="login__signin" id="sign-up">Sign Up</span>
                 </div>
-                <a href="#" class="login__button" onclick="document.getElementById('login-in').submit()">Sign In</a>
+                <a class="login__button" onclick="document.getElementById('login-in').submit()">Sign In</a>
             </form>
 
             <form method="post" action="signup" class="login__create none" id="login-up">

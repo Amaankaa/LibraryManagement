@@ -3,9 +3,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <link href="../assets/css/admin-dashboard.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/admin-dashboard.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/css/student.css" rel="stylesheet">
     <title>Staff Dashboard</title>
-    <link href="../assets/css/student.css" rel="stylesheet">
     <style>
         .content {
             width: 100%; /* Ensure the container spans the full width */
@@ -69,21 +69,24 @@
 <body>
 <div class="side-menu">
     <div class="brand-name">
-        <h1>STAFF</h1>
+        <h1>STUDENT</h1>
     </div>
     <ul>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/staff-dashboard.jsp"><img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/students.jsp"><img src="${pageContext.request.contextPath}/assets/png/reading-book (1).png">&nbsp; Students</a></li>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/books.jsp"><img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/For%20Staff/settings.jsp"><img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
-        <li><a style="color: white" href="${pageContext.request.contextPath}/index.jsp"><img src="${pageContext.request.contextPath}/assets/png/logout.png">&nbsp; Logout</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/student-navigator?page=dashboard">
+            <img src="${pageContext.request.contextPath}/assets/png/dashboard%20(2).png">&nbsp; Dashboard</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/student-navigator?page=books">
+            <img src="${pageContext.request.contextPath}/assets/png/school.png">&nbsp; Books</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/student-navigator?page=settings">
+            <img src="${pageContext.request.contextPath}/assets/png/settings.png">&nbsp; Settings</a></li>
+        <li><a style="color: white" href="${pageContext.request.contextPath}/student-navigator?page=logout">
+            <img src="${pageContext.request.contextPath}/assets/png/logout.png">&nbsp; Logout</a></li>
     </ul>
 </div>
 <div class="container">
     <div class="header">
         <div class="nav">
             <div class="search">
-                <h1>Staff-Dashboard</h1>
+                <h1>Student-Dashboard</h1>
             </div>
             <div class="user">
                 <img src="${pageContext.request.contextPath}/assets/png/notifications.png" alt="">
@@ -99,8 +102,7 @@
         <h2 style="text-align: center; margin-top: 20px;">Available Books</h2>
         <div class="book-grid">
             <%
-                try {
-                    Connection con = DBConnection.getConnection();
+                try {Connection con = DBConnection.getConnection();
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT title, author, price, rating, image_url FROM books");
 
@@ -112,7 +114,7 @@
                         String imageUrl = rs.getString("image_url");
             %>
             <div class="book-card">
-                <img src="<%= imageUrl != null ? imageUrl : "../assets/img/Not found.jpg" %>" alt="<%= title %>">
+                <img src="<%= imageUrl != null ? request.getContextPath() + imageUrl : request.getContextPath() + "/assets/img/NotFound.jpg" %>" alt="<%= title %>">
                 <h3><%= title %></h3>
                 <p>by <%= author %></p>
                 <p class="price">$<%= String.format("%.2f", price) %></p>
@@ -139,7 +141,6 @@
             %>
             <script>
                 alert("Error occurred while fetching books: <%= e.getMessage() %>");
-                window.location = 'staff-dashboard.jsp';
             </script>
             <%
                 }
